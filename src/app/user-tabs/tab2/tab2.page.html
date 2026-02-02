@@ -1,0 +1,211 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="musical-notes"></ion-icon>
+      Eventos Disponibles
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refreshEvents()" [disabled]="isLoading">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Eventos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>{{ message }}</p>
+  </div>
+
+  <ion-card *ngIf="message && !isLoading" [color]="messageColor">
+    <ion-card-content>
+      {{ message }}
+    </ion-card-content>
+  </ion-card>
+
+  <div class="events-grid" *ngIf="!isLoading && events.length > 0">
+    <ion-card *ngFor="let event of events" class="event-card">
+      <img [src]="event.imageUrl" [alt]="event.name" />
+      
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-icon name="person"></ion-icon>
+          {{ event.artistName }}
+        </ion-card-subtitle>
+        <ion-card-title>{{ event.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="event-info">
+          <div class="info-item">
+            <ion-icon name="calendar"></ion-icon>
+            <span>{{ event.date }}</span>
+          </div>
+          <div class="info-item">
+            <ion-icon name="location"></ion-icon>
+            <span>{{ event.location }}</span>
+          </div>
+        </div>
+
+        <div class="availability">
+          <div class="tickets-available">
+            <ion-icon name="ticket"></ion-icon>
+            <span>{{ event.availableTickets }} entradas disponibles</span>
+          </div>
+          <div class="price">
+            <ion-icon name="logo-ethereum"></ion-icon>
+            <span class="price-value">{{ event.price }} ETH</span>
+            <span class="price-label">por entrada</span>
+          </div>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          (click)="openPurchaseModal(event)"
+          [disabled]="event.availableTickets === 0">
+          <ion-icon slot="start" name="cart"></ion-icon>
+          Comprar Entradas
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!isLoading && events.length === 0" class="empty-state">
+    <ion-icon name="musical-notes-outline"></ion-icon>
+    <h2>No hay eventos disponibles</h2>
+    <p>Los eventos publicados por los artistas aparecerán aquí</p>
+  </div>
+
+  <ion-modal 
+    [isOpen]="selectedEvent !== null" 
+    (didDismiss)="closePurchaseModal()"
+    [breakpoints]="[0, 0.5, 0.75, 1]"
+    [initialBreakpoint]="0.75">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Confirmar Compra</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closePurchaseModal()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="modal-content">
+        <div *ngIf="selectedEvent" class="purchase-summary">
+          <img [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name" class="modal-image" />
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ selectedEvent.name }}</ion-card-title>
+              <ion-card-subtitle>{{ selectedEvent.artistName }}</ion-card-subtitle>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <ion-list>
+                <ion-item>
+                  <ion-icon name="calendar" slot="start"></ion-icon>
+                  <ion-label>{{ selectedEvent.date }}</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="location" slot="start"></ion-icon>
+                  <ion-label>{{ selectedEvent.location }}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Cantidad de Entradas</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <div class="quantity-selector">
+                <ion-button 
+                  fill="outline" 
+                  (click)="decrementQuantity()"
+                  [disabled]="quantityToBuy <= 1">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                
+                <div class="quantity-display">
+                  <span class="quantity-number">{{ quantityToBuy }}</span>
+                  <span class="quantity-label">entrada(s)</span>
+                </div>
+                
+                <ion-button 
+                  fill="outline" 
+                  (click)="incrementQuantity()"
+                  [disabled]="quantityToBuy >= selectedEvent.availableTickets">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-note>
+                Máximo {{ selectedEvent.availableTickets }} entradas disponibles
+              </ion-note>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="payment-summary">
+            <ion-card-header>
+              <ion-card-title>Resumen de Pago</ion-card-title>
+            </ion-card-header>
+            
+            <ion-card-content>
+              <ion-list>
+                <ion-item>
+                  <ion-label>Precio por entrada</ion-label>
+                  <ion-note slot="end">{{ selectedEvent.price }} ETH</ion-note>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Cantidad</ion-label>
+                  <ion-note slot="end">× {{ quantityToBuy }}</ion-note>
+                </ion-item>
+                <ion-item lines="none" class="total-item">
+                  <ion-label>
+                    <h2><strong>Total</strong></h2>
+                  </ion-label>
+                  <ion-note slot="end" class="total-price">
+                    <ion-icon name="logo-ethereum"></ion-icon>
+                    {{ getTotalPrice() }} ETH
+                  </ion-note>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-button 
+            expand="block" 
+            size="large"
+            color="success"
+            (click)="confirmPurchase()"
+            [disabled]="isPurchasing">
+            <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+            <span *ngIf="!isPurchasing">Confirmar Compra</span>
+            <span *ngIf="isPurchasing">Procesando...</span>
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            fill="outline"
+            (click)="closePurchaseModal()"
+            [disabled]="isPurchasing">
+            Cancelar
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

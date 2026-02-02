@@ -1,0 +1,169 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="repeat"></ion-icon>
+      Mercado Secundario
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="loadResaleTickets()" [disabled]="isLoading">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Mercado Secundario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando entradas en reventa...</p>
+  </div>
+
+  <div class="events-grid" *ngIf="!isLoading && resaleTickets.length > 0">
+    <ion-card *ngFor="let ticket of resaleTickets" class="event-card">
+      <ion-badge color="warning" class="resale-badge">
+        <ion-icon name="repeat"></ion-icon>
+        REVENTA
+      </ion-badge>
+
+      <img [src]="ticket.image" [alt]="ticket.name" />
+      
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-icon name="person"></ion-icon>
+          {{ ticket.sellerName }}
+        </ion-card-subtitle>
+        <ion-card-title>{{ ticket.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="event-info">
+          <div class="info-item">
+            <ion-icon name="calendar"></ion-icon>
+            <span>{{ ticket.date }}</span>
+          </div>
+          <div class="info-item">
+            <ion-icon name="location"></ion-icon>
+            <span>{{ ticket.location }}</span>
+          </div>
+          <div class="info-item">
+            <ion-icon name="key"></ion-icon>
+            <span>Token #{{ ticket.tokenId }}</span>
+          </div>
+        </div>
+
+        <div class="availability">
+          <div class="price">
+            <ion-icon name="logo-ethereum"></ion-icon>
+            <span class="price-value">{{ ticket.price }} ETH</span>
+            <span class="price-label">precio de reventa</span>
+          </div>
+        </div>
+
+        <ion-button 
+          expand="block" 
+          (click)="openPurchaseModal(ticket)">
+          <ion-icon slot="start" name="cart"></ion-icon>
+          Comprar Entrada
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!isLoading && resaleTickets.length === 0" class="empty-state">
+    <ion-icon name="repeat-outline"></ion-icon>
+    <h2>No hay entradas en reventa</h2>
+    <p>Las entradas que los usuarios pongan en reventa aparecerán aquí</p>
+  </div>
+
+  <ion-modal 
+    [isOpen]="selectedTicket !== null" 
+    (didDismiss)="closePurchaseModal()"
+    [breakpoints]="[0, 0.5, 0.75, 1]"
+    [initialBreakpoint]="0.75">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Confirmar Compra</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closePurchaseModal()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="modal-content">
+        <div *ngIf="selectedTicket" class="purchase-summary">
+          <ion-badge color="warning" style="margin-bottom: 16px; padding: 8px 16px; font-size: 0.9rem;">
+            <ion-icon name="repeat"></ion-icon>
+            ENTRADA EN REVENTA
+          </ion-badge>
+
+          <img [src]="selectedTicket.image" [alt]="selectedTicket.name" class="modal-image" />
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ selectedTicket.name }}</ion-card-title>
+              <ion-card-subtitle>
+                <ion-icon name="calendar"></ion-icon> {{ selectedTicket.date }}
+                <br>
+                <ion-icon name="location"></ion-icon> {{ selectedTicket.location }}
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-list>
+                <ion-item>
+                  <ion-icon name="person" slot="start" color="medium"></ion-icon>
+                  <ion-label>
+                    <h3>Vendedor</h3>
+                    <p>{{ selectedTicket.sellerName }}</p>
+                    <ion-note>{{ formatAddress(selectedTicket.seller) }}</ion-note>
+                  </ion-label>
+                </ion-item>
+
+                <ion-item>
+                  <ion-icon name="key" slot="start" color="medium"></ion-icon>
+                  <ion-label>
+                    <h3>Token ID</h3>
+                    <p>#{{ selectedTicket.tokenId }}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+
+              <div class="total-section">
+                <h3>Total a pagar</h3>
+                <div class="total-amount">
+                  <ion-icon name="logo-ethereum"></ion-icon>
+                  <span>{{ selectedTicket.price }} ETH</span>
+                </div>
+              </div>
+
+              <ion-button 
+                expand="block" 
+                size="large"
+                (click)="confirmPurchase()"
+                [disabled]="isLoading">
+                <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+                <span *ngIf="!isLoading">Confirmar Compra</span>
+                <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+              </ion-button>
+
+              <p class="modal-note">
+                <ion-icon name="shield-checkmark"></ion-icon>
+                Transacción segura mediante smart contract
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+

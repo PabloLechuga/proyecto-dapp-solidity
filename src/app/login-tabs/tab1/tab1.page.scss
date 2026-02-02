@@ -1,0 +1,416 @@
+.login-page {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  margin: 0;
+  
+  ion-card-content {
+    padding: 40px 30px;
+    text-align: center;
+  }
+}
+
+.logo-container {
+  margin-bottom: 24px;
+  
+  .metamask-logo {
+    width: 120px;
+    height: 120px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.login-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 24px 0;
+}
+
+.wallet-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #f0f9ff;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  
+  ion-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  
+  .wallet-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .wallet-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #10b981;
+      margin-bottom: 4px;
+    }
+    
+    .wallet-address {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #333;
+      background: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+  }
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  
+  ion-button {
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 48px;
+    font-weight: 600;
+    text-transform: none;
+    
+    &:hover {
+      transform: translateY(-2px);
+      --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+}
+
+.status-message {
+  width: 100%;
+  justify-content: center;
+  margin: 0 0 16px 0;
+  height: auto;
+  min-height: 36px;
+  
+  ion-label {
+    white-space: normal;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-wrapper {
+    padding: 16px;
+  }
+  
+  .login-card {
+    ion-card-content {
+      padding: 32px 24px;
+    }
+  }
+  
+  .logo-container .metamask-logo {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .login-title {
+    font-size: 1.75rem;
+  }
+  
+  .buttons-container ion-button {
+    height: 44px;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo-container .metamask-logo {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+
+.metamask-logo {
+  margin: 40px 0;
+  
+  img {
+    width: 180px;
+    height: 180px;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+      animation-play-state: paused;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px);
+  }
+  50% { 
+    transform: translateY(-15px);
+  }
+}
+
+.wallet-card {
+  margin: 28px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.98);
+  
+  ion-card-content {
+    padding: 20px;
+  }
+  
+  .wallet-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    
+    ion-icon {
+      font-size: 2.5rem;
+      margin-bottom: 4px;
+    }
+    
+    h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    p {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: #666;
+      background: #f5f5f5;
+      padding: 8px 16px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 28px 0;
+  
+  ion-button {
+    font-weight: 600;
+    font-size: 1rem;
+    --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    --border-radius: 12px;
+    height: 50px;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    ion-icon {
+      font-size: 1.3rem;
+      margin-right: 8px;
+    }
+  }
+  
+  ion-button[color="primary"] {
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --background-hover: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  }
+}
+
+.message-card {
+  margin: 24px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  ion-card-content {
+    padding: 16px 20px;
+    
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.footer-info {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+  color: #666;
+  
+  ion-icon {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    display: block;
+    color: #667eea;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container {
+    padding: 24px 16px;
+  }
+  
+  .login-header {
+    margin-bottom: 32px;
+    
+    .logo-icon {
+      font-size: 3.5rem;
+    }
+    
+    h1 {
+      font-size: 2.2rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+  
+  .metamask-logo {
+    margin: 32px 0;
+    
+    img {
+      width: 140px;
+      height: 140px;
+    }
+  }
+  
+  .button-container {
+    ion-button {
+      height: 46px;
+      font-size: 0.95rem;
+    }
+  }
+  
+  .footer-info {
+    margin-top: 36px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .login-container {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 769px) {
+  .login-container {
+    max-width: 480px;
+    padding: 40px 32px;
+  }
+  
+  .metamask-logo {
+    margin: 48px 0;
+    
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
+  .button-container {
+    ion-button {
+      height: 54px;
+      font-size: 1.05rem;
+    }
+  }
+}
+
+.login-container {
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-button {
+  &.button-loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}

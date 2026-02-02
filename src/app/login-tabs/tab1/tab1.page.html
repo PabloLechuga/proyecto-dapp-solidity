@@ -1,0 +1,68 @@
+<ion-content class="login-page">
+  <div class="login-wrapper">
+    <ion-card class="login-card">
+      <ion-card-content>
+        <!-- Logo MetaMask -->
+        <div class="logo-container">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/960px-MetaMask_Fox.svg.png" 
+               alt="MetaMask Logo" 
+               class="metamask-logo">
+        </div>
+
+        <!-- Título -->
+        <h1 class="login-title">TicketChain</h1>
+        <p class="login-subtitle">Conecta tu wallet para continuar</p>
+
+        <!-- Estado de la wallet -->
+        <div *ngIf="walletAddress" class="wallet-status">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <div class="wallet-info">
+            <span class="wallet-label">Wallet Conectada</span>
+            <span class="wallet-address">{{ formatAddress(walletAddress) }}</span>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="buttons-container">
+          <ion-button 
+            expand="block" 
+            color="primary" 
+            (click)="connectWallet()"
+            *ngIf="!walletAddress">
+            <ion-icon name="wallet" slot="start"></ion-icon>
+            Conectar MetaMask
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            color="warning" 
+            (click)="changeAccount()"
+            *ngIf="walletAddress">
+            <ion-icon name="swap-horizontal" slot="start"></ion-icon>
+            Cambiar Cuenta
+          </ion-button>
+
+          <ion-button 
+            expand="block" 
+            color="success" 
+            (click)="login()"
+            *ngIf="walletAddress">
+            <ion-icon name="log-in" slot="start"></ion-icon>
+            Entrar
+          </ion-button>
+        </div>
+
+        <!-- Mensaje de estado -->
+        <ion-chip *ngIf="message" [color]="messageColor" class="status-message">
+          <ion-label>{{ message }}</ion-label>
+        </ion-chip>
+
+        <!-- Footer -->
+        <div class="card-footer">
+          <ion-icon name="shield-checkmark"></ion-icon>
+          <span>Conexión segura</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
