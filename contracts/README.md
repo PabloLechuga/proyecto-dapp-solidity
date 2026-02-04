@@ -601,23 +601,3 @@ const contract = new web3.eth.Contract(
 
 await contract.methods.registerUser().send({ from: account });
 ```
-
----
-
-## 📚 Referencias
-
-- **ERC721**: https://eips.ethereum.org/EIPS/eip-721
-- **ERC2981**: https://eips.ethereum.org/EIPS/eip-2981
-- **OpenZeppelin**: https://docs.openzeppelin.com/contracts/
-- **Truffle**: https://trufflesuite.com/docs/
-
----
-
-## 📄 Changelog
-
-### Versión 1.0.0
-- Implementación inicial de UserRegistry
-- TicketNFT con soporte ERC2981
-- Marketplace con distribución automática de regalías
-- 39 tests pasando
-- Sistema de roles completo
