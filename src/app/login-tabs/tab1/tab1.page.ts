@@ -15,8 +15,8 @@ export class Tab1Page {
   web3: Web3 | null = null;
   contract: Contract<any> | null = null;
   userRegistryContract: Contract<any> | null = null;
-  contractAddress: string = '0xaA4084072238B186Dbd81cdBeD61417354144F2e';
-  userRegistryAddress: string = '0x8772D2Aa80f9693B12ed8e32743ED2eE5E36e5dB';
+  contractAddress: string = '0x7f539D182992AD3442FceD13c1Ae3089AB0DAd35';
+  userRegistryAddress: string = '0xDAF513f52E58bc32946D7b1b0175afE160435705';
   message: string = '';
   messageColor: string = 'primary';
 

@@ -27,8 +27,8 @@ export class Tab2Page implements OnInit {
   contract: Contract<any> | null = null;
   marketplaceContract: Contract<any> | null = null;
   walletAddress: string | null = null;
-  contractAddress: string = '0xaA4084072238B186Dbd81cdBeD61417354144F2e';
-  marketplaceAddress: string = '0x45Eb12Bb7dBDCAD417B06D44664FfcFE803Ec33f';
+  contractAddress: string = '0x7f539D182992AD3442FceD13c1Ae3089AB0DAd35';
+  marketplaceAddress: string = '0xAeED9C18BB7CcaE9c2f58a556b73FD149e9768d3';
   
   event: EventData = {
     name: '',

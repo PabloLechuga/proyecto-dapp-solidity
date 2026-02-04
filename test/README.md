@@ -189,22 +189,3 @@ Para medir cobertura de código:
 npm install --save-dev solidity-coverage
 truffle run coverage
 ```
-
-## 🚀 Para el TFM
-
-**Puntos importantes:**
-1. Ejecutar: `truffle test` y capturar screenshot mostrando "39 passing"
-2. Destacar tests de royalties (5%)
-3. Mostrar tests de seguridad (casos negativos)
-4. Mencionar que se prueba en entorno local (Ganache)
-5. Total: 39 tests cubriendo 3 contratos
-
-## 📚 Referencias
-
-- [Truffle Testing](https://trufflesuite.com/docs/truffle/testing/testing-your-contracts/)
-- [Mocha Testing Framework](https://mochajs.org/)
-- [Chai Assertions](https://www.chaijs.com/)
-
----
-
-**Nota:** Estos tests están diseñados para ejecutarse en Ganache local. No requieren testnet pública ni costos de gas.
